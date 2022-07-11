@@ -1,5 +1,9 @@
 # REVIEW REPLIER
 
 
-[reviews_ui.pdf](https://github.com/fahadakmal/reviewReplier/files/9082268/reviews_ui.pdf)
 
+<object data="https://github.com/fahadakmal/reviewReplier/files/9082268/reviews_ui.pdf" type="application/pdf" width="750px" height="750px">
+    <embed src="http://yoursite.com/the.pdf" type="application/pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
