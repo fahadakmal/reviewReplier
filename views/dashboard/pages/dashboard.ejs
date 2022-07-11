@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Replier | Dashboard</title>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/auth_loader'); %>
+    <div class="wrapper">
+      <%- include('../partials/sidebar'); %>
+
+      <!-- End Navbar -->
+      <div class="main-panel">
+        <%- include('../partials/nav'); %>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="table-responsive table-full-width">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <th>App Id</th>
+                  <th>Name</th>
+                  <th>Icon</th>
+                  <!-- <th>Action</th> -->
+                </thead>
+                <tbody>
+                  <% if (apps) { %>
+                    <% apps.forEach(app => { %>
+                      <tr>
+                        <td><%= app.appId %></td>
+                        <td><%= app.name %></td>
+                        <td> <img  src="<%= app.iconUrl%>" alt="" height="40px" width="40px" >  </td>
+                        <!-- <td><button class="btn btn-danger">Danger</button> -->
+                        </td>
+                      </tr>    
+                      <% }) %>
+                      <% } %> 
+               
+                </tbody>
+              </table>
+            
+            </div
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  
+      
+
+    
+
+    <!--   Core JS Files   -->
+    <%- include('../partials/core_scripts'); %>
+  </body>
+</html>

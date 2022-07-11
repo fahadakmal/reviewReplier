@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Replier | Replies</title>
+    <%- include('../partials/head'); %>
+    <style>
+      .ratingStar {
+        color: gold;
+        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/auth_loader'); %>
+    <div class="wrapper">
+      <%- include('../partials/sidebar'); %>
+
+      <!-- End Navbar -->
+      <div class="main-panel">
+        <%- include('../partials/nav'); %>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover">
+                  <div class="card-header">
+                    <h4 class="card-title">All Replies</h4>
+                    <p class="card-category">Here is a list of all Replies</p>
+                    <!-- <a
+                      href="/products/add"
+                      class="btn btn-primary float-right"
+                      >Add</a
+                    > -->
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">User Review</div>
+                      <div class="col-md-6">Your Reply</div>
+                    </div>
+                    <% if (replies) { %> <% replies.forEach(singleReply => { %>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div
+                          class="container-fluid"
+                          style="
+                            min-height: 100px;
+                            max-height: auto;
+                            border: 1px solid black;
+                          "
+                        >
+                          <div class="row">
+                            <!-- Need to add theme, buttons -->
+                            <div class="col-md-8">
+                              <h4 class="card-title">
+                                <%= singleReply.rewiewId.reviewAurther %>
+                              </h4>
+                            </div>
+                            <div class="col-md-4">
+                              <% if(Number(singleReply.rewiewId.reviewRating)
+                              ==1) {%>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <% }else
+                              if(Number(singleReply.rewiewId.reviewRating) ==2)
+                              { %>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+
+                              <% }else
+                              if(Number(singleReply.rewiewId.reviewRating) ==3)
+                              { %>
+
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+
+                              <% }else
+                              if(Number(singleReply.rewiewId.reviewRating) ==4)
+                              { %>
+
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+
+                              <% }else { %>
+
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+                              <i
+                                class="fa fa-star ratingStar"
+                                aria-hidden="true"
+                              ></i>
+
+                              <% } %>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <!-- Need to add theme, buttons -->
+                            <div class="col-md-12" style="overflow: hidden">
+                              <p style="font-size: 11px">
+                                <%= singleReply.rewiewId.reviewUserComment %>
+                              </p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <!-- Need to add theme, buttons -->
+                            <div class="col-md-4">
+                              <p style="font-size: 11px">
+                                <%= new
+                                Date(singleReply.rewiewId.publishedDate).toLocaleDateString("en-US",{
+                                weekday: 'long', year: 'numeric', month: 'long',
+                                day: 'numeric' }) %>
+                              </p>
+                            </div>
+                            <div class="col-md-4">
+                              <p style="font-size: 11px">
+                                <%= singleReply.rewiewId.reviewLanguage %>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <textarea
+                          id="<%= singleReply._id%>"
+                          style="
+                            width: 100%;
+                            height: 100px;
+                            max-width: 100%;
+                            padding: 10px;
+                          "
+                          rows="10"
+                          placeholder="Enter Reply"
+                          onkeyup="changeReply('<%= singleReply._id%>')"
+                        >
+  <%= singleReply.reviewDeveloperComment %></textarea
+                        >
+                      </div>
+                    </div>
+                    <% }) %> <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% if(replies) {%> <% if(replies.length >0) {%>
+
+            <div class="container mb-5">
+              <div class="float-right">
+                <button
+                  onclick="deployAllReplies('<%= currentAppId %>')"
+                  class="btn btn-primary btn-fill"
+                >
+                  Approve and Deploy
+                </button>
+              </div>
+            </div>
+            <% } %> <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--   Core JS Files   -->
+    <%- include('../partials/core_scripts'); %>
+  </body>
+  <script>
+    function changeReply(replyId) {
+      var updatedReply = document.getElementById(replyId).value;
+      if (updatedReply === "") {
+        alert("Empty Reply not allowed");
+        return;
+      }
+      const data = {
+        replyId: replyId,
+        updatedReply: updatedReply,
+      };
+      axios
+        .post("/reply/updateReplyBeforeDeply", { ...data })
+        .then((res) => {
+          if (res.data.success) {
+            console.log("updated");
+          } else {
+            if (res.data.hasOwnProperty("errors")) {
+              const error =
+                res.data.message +
+                "<br/>" +
+                build_error_message(res.data.errors);
+            } else {
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    function deployAllReplies(currentAppId) {
+      auth_loader.style.display = "block";
+
+      axios
+        .post("/reply/deployAllReply", { appId: currentAppId })
+        .then((res) => {
+          if (res.data.success) {
+            auth_loader.style.display = "none";
+
+            demo.showNotification("top", "right", res.data.message, 2);
+            setTimeout(() => (window.location.href = "/"), 1500);
+          } else {
+            auth_loader.style.display = "none";
+
+            if (res.data.hasOwnProperty("errors")) {
+              const error =
+                res.data.message +
+                "<br/>" +
+                build_error_message(res.data.errors);
+              demo.showNotification("top", "right", error, 4);
+            } else {
+              demo.showNotification("top", "right", res.data.message, 4);
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  </script>
+</html>

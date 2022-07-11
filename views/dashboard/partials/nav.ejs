@@ -1,0 +1,206 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg" color-on-scroll="500">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#pablo">
+      <% if (locals.currentApp ) { %>
+      <img
+        src="<%= currentApp[0].iconUrl %>"
+        alt=""
+        height="40px"
+        width="40px"
+      />
+      <% } %> <%= page.toUpperCase() %>
+    </a>
+    <% if (locals.currentApp ) { %>
+    <div class="row">
+      <button
+        type="button"
+        class="btn btn-danger btn-fill"
+        onclick="showDeleteModel()"
+      >
+        Remove App
+      </button>
+      <button
+        role="button"
+        class="btn btn-primary btn-fill"
+        onclick="showReplyAllModel()"
+      >
+        Reply All
+      </button>
+      <a
+        class="btn btn-success btn-fill"
+        href="/reply/getDeployedReviews/<%= currentApp[0]._id %>"
+      >
+        Approve and Deploy
+      </a>
+    </div>
+    <% } %>
+
+    <button
+      href=""
+      class="navbar-toggler navbar-toggler-right"
+      type="button"
+      data-toggle="collapse"
+      aria-controls="navigation-index"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-bar burger-lines"></span>
+      <span class="navbar-toggler-bar burger-lines"></span>
+      <span class="navbar-toggler-bar burger-lines"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Modal -->
+<% if (locals.currentApp ) { %>
+
+<div
+  class="modal fade"
+  id="deleteModel"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <strong> Remove App</strong>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <p>
+          You are about to remove the app
+          <strong><%= currentApp[0].name %></strong>
+        </p>
+        <h6><%= currentApp[0].appId %></h6>
+        <p>Are you sure you want to do it?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="hideDeleteModel()"
+          class="btn btn-primary btn-fill ml-auto"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          onclick="deleteApp('<%= currentApp[0]._id %>')"
+          class="btn btn-danger btn-fill ml-3"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="replyAllModel"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <strong> Remove App</strong>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to begin replying all reviews</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          onclick="hideReplyAllModel()"
+          class="btn btn-primary btn-fill ml-auto"
+        >
+          Cancel
+        </button>
+        <button
+          id="beginBtn"
+          type="button"
+          onclick="replyAll('<%= currentApp[0]._id %>')"
+          class="btn btn-success btn-fill ml-3"
+        >
+          Begin
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>
+<script>
+  function showReplyAllModel(params) {
+    $("#replyAllModel").modal("show");
+  }
+
+  function hideReplyAllModel(params) {
+    $("#replyAllModel").modal("hide");
+  }
+
+  function replyAll(appId) {
+    document.getElementById(
+      "beginBtn"
+    ).innerHTML = `<i class="fa fa-spinner fa-spin"></i>Loading`;
+    axios
+      .post("/app/replyAll", { appId: appId })
+      .then((res) => {
+        document.getElementById("beginBtn").innerHTML = `Begin`;
+        hideReplyAllModel();
+        if (res.data.success) {
+          demo.showNotification("top", "right", res.data.message, 2);
+          setTimeout(() => (window.location.href = "/"), 1500);
+        } else {
+          if (res.data.hasOwnProperty("errors")) {
+            const error =
+              res.data.message + "<br/>" + build_error_message(res.data.errors);
+            demo.showNotification("top", "right", error, 4);
+          } else {
+            demo.showNotification("top", "right", res.data.message, 4);
+          }
+        }
+      })
+      .catch((err) => {
+        document.getElementById("beginBtn").innerHTML = `Begin`;
+        console.log(err);
+      });
+  }
+
+  function showDeleteModel() {
+    $("#deleteModel").modal("show");
+  }
+  function hideDeleteModel() {
+    $("#deleteModel").modal("hide");
+  }
+
+  function deleteApp(appId) {
+    const data = {
+      id: appId,
+    };
+    axios
+      .post("/app/deleteApp", { ...data })
+      .then((res) => {
+        console.log(res);
+        hideDeleteModel();
+        if (res.data.success) {
+          demo.showNotification("top", "right", res.data.message, 2);
+          setTimeout(() => (window.location.href = "/"), 1500);
+        } else {
+          if (res.data.hasOwnProperty("errors")) {
+            const error =
+              res.data.message + "<br/>" + build_error_message(res.data.errors);
+            demo.showNotification("top", "right", error, 4);
+          } else {
+            demo.showNotification("top", "right", res.data.message, 4);
+          }
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+</script>

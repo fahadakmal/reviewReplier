@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Replier | Reviews</title>
+    <%- include('../partials/head'); %>
+    <style>
+         .ratingStar {
+        color: gold;
+        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/auth_loader'); %>
+    <div class="wrapper">
+      <%- include('../partials/sidebar'); %>
+
+      <!-- End Navbar -->
+      <div class="main-panel">
+        <%- include('../partials/nav'); %>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card strpied-tabled-with-hover">
+                  <div class="card-header">
+                    
+                    <h4 class="card-title">Reviews</h4>
+                    <p class="card-category">Here is a list of all Reviews</p>
+                  </div>
+                  <% if (reviewsData) { %>
+                    <% reviewsData.forEach(singleReview => { %>
+                      <div class="container ml-auto mb-2">
+                        <div class="row">
+                          <div class="col-md-12">
+                              <div class="container-fluid" style="min-height: 100px; max-height: auto; border:1px solid black;">
+                                  <div class="row">                                           
+                                    <!-- Need to add theme, buttons -->                       
+                                    <div class="col-md-8"> 
+                                      <h4 class="card-title"><%= singleReview.reviewAurther %></h4>
+                                  </div>         
+                                  <div class="col-md-4"> 
+                                  <% if(Number(singleReview.reviewRating) ==1) {%>    
+                                      <i
+                                      class="fa fa-star ratingStar"
+                                      aria-hidden="true"
+                                    ></i>
+                                      <% }else if(Number(singleReview.reviewRating) ==2) { %>
+                                          <i
+                                          class="fa fa-star ratingStar"
+                                          aria-hidden="true"
+                                        ></i> <i
+                                        class="fa fa-star ratingStar"
+                                        aria-hidden="true"
+                                      ></i>
+
+                                          <% }else if(Number(singleReview.reviewRating) ==3) { %>
+
+                                              <i
+                                              class="fa fa-star ratingStar"
+                                              aria-hidden="true"
+                                            ></i> <i
+                                            class="fa fa-star ratingStar"
+                                            aria-hidden="true"
+                                          ></i> <i
+                                          class="fa fa-star ratingStar"
+                                          aria-hidden="true"
+                                        ></i>
+
+                                              <% }else if(Number(singleReview.reviewRating) ==4) { %>
+
+                                                  <i
+                                                  class="fa fa-star ratingStar"
+                                                  aria-hidden="true"
+                                                ></i> <i
+                                                class="fa fa-star ratingStar"
+                                                aria-hidden="true"
+                                              ></i> <i
+                                              class="fa fa-star ratingStar"
+                                              aria-hidden="true"
+                                            ></i> <i
+                                            class="fa fa-star ratingStar"
+                                            aria-hidden="true"
+                                          ></i>
+
+                                                  <% }else  { %>
+
+                                                      <i
+                                                      class="fa fa-star ratingStar"
+                                                      aria-hidden="true"
+                                                    ></i> <i
+                                                    class="fa fa-star ratingStar"
+                                                    aria-hidden="true"
+                                                  ></i> <i
+                                                  class="fa fa-star ratingStar"
+                                                  aria-hidden="true"
+                                                ></i> <i
+                                                class="fa fa-star ratingStar"
+                                                aria-hidden="true"
+                                              ></i> <i
+                                              class="fa fa-star ratingStar"
+                                              aria-hidden="true"
+                                            ></i>
+
+
+                                                      <% } %>
+
+
+
+                                  </div>      
+                                  </div>                                                      
+                                  <div class="row">                                           
+                                    <!-- Need to add theme, buttons -->                       
+                                    <div class="col-md-12" style="overflow: hidden;
+                                    "> 
+                                       <p style="font-size: 14px;"> <%= singleReview.reviewUserComment %> </p> 
+                                    </div>               
+                                  </div>           
+                                  <div class="row">                                           
+                                      <!-- Need to add theme, buttons -->                       
+                                      <div class="col-md-4" 
+                                      > 
+                                         <p style="font-size: 11px;"> <%= new Date(singleReview.publishedDate).toLocaleDateString("en-US",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> </p> 
+                                      </div> 
+                                      <div class="col-md-4" 
+                                      > 
+                                      </div> 
+                           
+                                    </div>                                              
+                              </div>                                       </div>
+                   
+                      </div>
+                      </div>
+                      <% if (singleReview.reviewRepliedStatus) { %>
+
+                      <div class="container ml-auto mb-2">
+                        <div class="row">
+                          <div class="col-md-1">
+                            <div class="container-fluid ml-auto">
+                              <div class="row">                                           
+                             <i class="fa fa-reply fa-5x"></i>         
+               
+                              </div>                                                      
+                                                                               
+                          </div>   
+                          </div>
+                          <div class="col-md-11">
+                              <div class="container-fluid" style="min-height: 100px; max-height: auto; border:1px solid black;">
+                                  <div class="row">                                           
+                                    <!-- Need to add theme, buttons -->                       
+                                    <div class="col-md-12"> 
+                                      <h4 class="card-title"> Playmania </h4>
+                                  </div>         
+                   
+                                  </div>                                                      
+                                  <div class="row">                                           
+                                    <!-- Need to add theme, buttons -->                       
+                                    <div class="col-md-12" style="overflow: hidden;
+                                    "> 
+                                       <p style="font-size: 14px;"> <%=singleReview.reviewDeveloperComment %> </p> 
+                                    </div>               
+                                  </div>                                                     
+                              </div>                                       </div>
+                   
+                      </div>
+                      </div>
+                      <% } %> 
+
+                     
+                     
+                      <% }) %>
+                      <% } %> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--   Core JS Files   -->
+    <%- include('../partials/core_scripts'); %>
+  </body>
+</html>

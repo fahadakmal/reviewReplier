@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Replier | Add Product</title>
+    <%- include('../partials/head'); %>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .starCheckkBox {
+        width: 20px;
+        height: 20px;
+      }
+      .ratingStar {
+        color: gold;
+        text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/auth_loader'); %>
+    <div class="wrapper">
+      <%- include('../partials/sidebar'); %>
+
+      <!-- End Navbar -->
+      <div class="main-panel">
+        <%- include('../partials/nav'); %>
+        <div class="content">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <form action="">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label for="sub-description"
+                        ><h5><strong>Supported Stars</strong></h5>
+                      </label>
+                      <div class="form-group">
+                        <label class="form-check-label">
+                          <input class="form-check-input starCheckkBox"
+                          type="checkbox" id="rating1" <%
+                          reply.supportedStars.split('|').forEach((ele)=>{ %> <%
+                          if(ele == 1) {%> checked <% } }) %> />
+                          <span class="form-check-sign"></span>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                        </label>
+                        <br />
+                        <label class="form-check-label">
+                          <input class="form-check-input starCheckkBox"
+                          type="checkbox" id="rating2" <%
+                          reply.supportedStars.split('|').forEach((ele)=>{ %> <%
+                          if(ele == 2) {%> checked <% } %> <% }) %> />
+                          <span class="form-check-sign"></span>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                        </label>
+                        <br />
+
+                        <label class="form-check-label">
+                          <input class="form-check-input starCheckkBox"
+                          type="checkbox" id="rating3" <%
+                          reply.supportedStars.split('|').forEach((ele)=>{ %> <%
+                          if(ele == 3) {%> checked <% } %> <% }) %> />
+                          <span class="form-check-sign"></span>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                        </label>
+                        <br />
+
+                        <label class="form-check-label">
+                          <input class="form-check-input starCheckkBox"
+                          type="checkbox" id="rating4" <%
+                          reply.supportedStars.split('|').forEach((ele)=>{ %> <%
+                          if(ele == 4) {%> checked <% } %> <% }) %> />
+                          <span class="form-check-sign"></span>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                        </label>
+                        <br />
+
+                        <label class="form-check-label">
+                          <input class="form-check-input starCheckkBox"
+                          type="checkbox" id="rating5" <%
+                          reply.supportedStars.split('|').forEach((ele)=>{ %> <%
+                          if(ele == 5) {%> checked <% } %> <% }) %> />
+                          <span class="form-check-sign"></span>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            class="fa fa-star ratingStar fa-2x ml-3"
+                            aria-hidden="true"
+                          ></i>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label for="sub-description"
+                          ><h5><strong>Supported Apps:</strong></h5></label
+                        >
+                        <div class="row mt-4">
+                          <% if (apps) { %> <% apps.forEach(app => { %>
+                          <div class="form-group">
+                            <label class="form-check-label">
+                              <input
+                                class="form-check-input starCheckkBox ml-1"
+                                type="checkbox"
+                                id="<%= app._id%>"
+                              />
+
+                              <p class="ml-3">
+                                <img
+                                  class="ml-3"
+                                  src="<%= app.iconUrl %>"
+                                  alt=""
+                                  height="30px"
+                                  width="30px"
+                                />
+                                <%= app.name %>
+                              </p>
+                            </label>
+                          </div>
+
+                          <% }) %> <% } %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <label for="sku"
+                    ><h5><strong>Reply Text(By Language):</strong></h5></label
+                  >
+                  <div class="container" id="inputReply"></div>
+                </form>
+              </div>
+              <div class="col-md-12 text-right">
+                <button class="btn btn-primary btn-fill" onclick="add_reply()">
+                  UPDATE
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="languageModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><strong>Please select language</strong> </h5>
+            <button type="button" class="close btn-fill" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group" id="languageRadioInput">
+          </div>      </div>
+          <div class="modal-footer">
+            <button id="addLanguageButtton" onclick="addMoreReply()" type="button" class="btn btn-primary btn-fill  ml-auto">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--   Core JS Files   -->
+    <%- include('../partials/core_scripts'); %>
+    <%- include('../partials/languages'); %>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+      var replyFromEjs = `<%- JSON.stringify(reply) %>`;
+      let parsedReply = JSON.parse(replyFromEjs);
+      let loadedReply = [];
+
+      function showLanguageModel() {
+    $("#languageModel").modal("show");
+  }
+  function hideLanguageModel() {
+    $("#languageModel").modal("hide");
+  }
+      $(document).ready(function () {
+        parsedReply.supportedApps.forEach((langReply) => {
+          document.getElementById(langReply._id).checked = "true";
+        });
+
+        parsedReply.replyByLanguage.forEach((langReply) => {
+          loadedReply.push({
+            lang: langReply.lang,
+            reply: langReply.reply,
+            keyWords: langReply.keyWords,
+          });
+        });
+        renderLanguageRadios();
+
+        displayLanguagesReply();
+      });
+
+      function renderLanguageRadios() {
+
+let languageInputHtml='';
+
+inputLnaguages.forEach((singleLanguage)=>{
+  
+    languageInputHtml+=`
+  <label for="${singleLanguage.lang}">
+<input type="radio" id="${singleLanguage.lang}" name="languageRadio" value="${singleLanguage.lang}" />
+${singleLanguage.lang}
+</label><br>`
+   
+
+     });
+     document.getElementById('languageRadioInput').innerHTML=languageInputHtml;
+
+}
+      function addMoreReply(index) {
+        let ele=document.querySelector('input[name="languageRadio"]:checked').value;
+         let nextLanguageReply=inputLnaguages.filter((singleLanguage)=>singleLanguage.lang == ele)
+             console.log(nextLanguageReply);
+          loadedReply.push(nextLanguageReply[0]);
+          hideLanguageModel();
+                    displayLanguagesReply();
+        
+      }
+      function deleteReply(index) {
+        loadedReply.splice(index, 1);
+        displayLanguagesReply();
+      }
+
+      function changeReplyOrKeywords(idIndex, type) {
+        if (type == "reply") {
+          let updatedReply = document.getElementById(
+            "replyTextArea" + idIndex
+          ).value;
+          loadedReply[idIndex].reply = updatedReply;
+        } else {
+          let updatedkeywords = document.getElementById(
+            "keywordsTextArea" + idIndex
+          ).value;
+          loadedReply[idIndex].keyWords = updatedkeywords;
+        }
+      }
+
+      function displayLanguagesReply() {
+        let languagesInnerHtml = "";
+        loadedReply.forEach((singleReply, index) => {
+          languagesInnerHtml += `
+          <div class="row ">
+                    <div class="col-md-1">
+                      <h5 class="float-right"><strong style="font-size: xx-large;">${singleReply.lang.toUpperCase()}</strong></h5>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <textarea
+                          name=""s
+                          id="replyTextArea${index}"
+                          style="width: 100%; height: 100px; max-width: 100%; padding: 10px"
+                          rows="10"
+                          placeholder="Enter Reply"
+                          onkeyup="changeReplyOrKeywords('${index}','reply')"
+                        >${singleReply.reply}</textarea>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <textarea
+                          name=""
+                          id="keywordsTextArea${index}"
+                          style="width: 100%; height: 100px; max-width: 100%; padding: 10px"
+                          rows="10"
+                          onkeyup="changeReplyOrKeywords('${index}','keywords')"
+
+                        >${singleReply.keyWords}</textarea>
+                        <label for="sub-description">Enter a comma after each Keywoard</label>
+            
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="form-group">
+                      ${returnButton(index, loadedReply)}
+                      </div>
+                    </div>
+                  </div>`;
+        });
+        document.getElementById("inputReply").innerHTML = languagesInnerHtml;
+      }
+
+      function returnButton(index, loadedReply) {
+        if (loadedReply.length === 1) {
+          return `   <i
+                        onClick="showLanguageModel()"
+                        style="color: blue;"
+                        class="fa fa-plus-square fa-2x mt-1"
+                       
+                        aria-hidden="true"
+                      ></i>`;
+        } else {
+          return ` <i
+                        onClick="deleteReply('${index}')"
+                        style="color: blue;"
+                        class="fa fa-remove fa-2x mt-1"
+                       
+                        aria-hidden="true"
+                      ></i><i
+                        onClick="showLanguageModel()"
+                        style="color: blue;"
+                        class="fa fa-plus-square fa-2x mt-3 ml-3"
+                       
+                        aria-hidden="true"
+                      ></i>`;
+        }
+      }
+      function add_reply() {
+        const rating1 = document.getElementById("rating1");
+        const rating2 = document.getElementById("rating2");
+        const rating3 = document.getElementById("rating3");
+        const rating4 = document.getElementById("rating4");
+        const rating5 = document.getElementById("rating5");
+
+        let ratingString = "";
+        if (rating1.checked) {
+          ratingString = ratingString + "1|";
+        }
+        if (rating2.checked) {
+          ratingString = ratingString + "2|";
+        }
+        if (rating3.checked) {
+          ratingString = ratingString + "3|";
+        }
+        if (rating4.checked) {
+          ratingString = ratingString + "4|";
+        }
+        if (rating5.checked) {
+          ratingString = ratingString + "5";
+        }
+        var appsFromEjs = `<%- JSON.stringify(apps) %>`;
+        let parsedApps = JSON.parse(appsFromEjs);
+        let supportedApps = [];
+        parsedApps.forEach((app) => {
+          if (document.getElementById(app._id).checked) {
+            supportedApps.push(app._id);
+          }
+        });
+
+        let prevLang=''
+        for (let index = 0; index < loadedReply.length; index++) {
+          if(loadedReply[index].lang == prevLang)
+          {
+            alert("You can only add one language and reply respectively");
+            return;
+          }else{
+            prevLang=loadedReply[index].lang;
+          }
+          if (loadedReply[index].reply == "") {
+            alert("Empty reply not allowed");
+            return;
+          }
+        }
+        if (supportedApps.length === 0) {
+          alert("Please select atleast one app");
+          return;
+        }
+        if (ratingString === "") {
+          alert("Please select atleast one star rating");
+          return;
+        }
+
+        const data = {
+          supportedStars: ratingString,
+          replyByLanguage: loadedReply,
+          supportedApps: supportedApps,
+          replyId: parsedReply._id,
+        };
+        axios
+          .post("/reply/update/", { ...data })
+          .then((res) => {
+            if (res.data.success) {
+              demo.showNotification("top", "right", res.data.message, 2);
+              setTimeout(() => (window.location.href = "/reply"), 1500);
+            } else {
+              if (res.data.hasOwnProperty("errors")) {
+                const error =
+                  res.data.message +
+                  "<br/>" +
+                  build_error_message(res.data.errors);
+                demo.showNotification("top", "right", error, 4);
+              } else {
+                demo.showNotification("top", "right", res.data.message, 4);
+              }
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,233 @@
+<div class="sidebar" style="background-color: #293042;" data-image="">
+  <!--
+    Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+
+    Tip 2: you can also add an image using data-image tag
+-->
+  <div class="sidebar-wrapper">
+    <div class="logo">
+      <a href="/" target="_blank" class="simple-text"> Auto Replier </a>
+    </div>
+    <ul class="nav">
+      <li class="<%= page == ""? "nav-item active": ""%>" >
+        <a class="nav-link" href="/">
+          <i class="fa fa-tablet"></i>
+          <p>All Apps</p>
+        </a>
+      </li>
+      <li class="nav-item" >
+        <ul class="nav ml-3">
+          <% if (apps) { %>
+            <% apps.forEach(app => { %>
+              <li class="<%= page == "apps"? "nav-item active": ""%>" >
+                <a class="nav-link" href="/app/getApp/<%=app._id%>">
+                  <img  src="<%= app.iconUrl%>" alt="" height="20px" width="20px" >            
+                        <p class="ml-1"><%= app.name %></p>
+                </a>
+              </li>
+              <% }) %>
+              <% } %> 
+        
+            
+    
+        </ul>
+        <li  class="nav-item">
+          <div class="nav-link ml-4" type="button" onclick="showSearchAppDialog()">
+            <i class="fa fa-plus-square"></i>
+            <p >Add New App</p>
+          </div>
+        </li>
+        </li>
+      <li  >
+        <a class="nav-link">
+          <i class="fa fa-reply"></i>
+          <p>Replies</p>
+        </a>
+      </li>
+      <ul class="nav ml-3">
+        <li class="<%= page == "products"? "nav-item active": ""%>" >
+          <a class="nav-link" href="/reply">
+            <i class="fa fa-list-alt"></i>
+            <p>All Replies  </p>
+          </a>
+        </li>
+        <li class="<%= page == "products"? "nav-item active": ""%>" >
+          <a class="nav-link" href="/reply/add">
+            <i class="fa fa-plus-square"></i>
+            <p>Add New Reply</p>
+          </a>
+        </li>
+      </ul>
+    
+      <div class="col-md-2">
+        <button  onclick="fetchReviews()" style="min-width: 12rem; min-height: 30px ;" class="nav-link  btn btn-primary btn-fill"><b>Fetch Reviews</b> </button>
+      </div>
+    </ul>
+  </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong>Add New Application</strong> </h5>
+        <button type="button" class="close btn-fill" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="exampleInputEmail1">App Bundle Name</label>
+          <input id=bundleIdInput type="text" class="form-control" placeholder="com.example.package">
+      </div>      </div>
+      <div class="modal-footer">
+        <div id="appDataDiv" class="row ml-3">
+        
+        </div>
+      
+        <button id="searchButton" type="button" class="btn btn-primary btn-fill  ml-auto">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showSearchAppDialog() {
+  $('#myModal').modal('show');
+}
+
+document.getElementById("searchButton").addEventListener("click", function(e) {
+  let inputBundledId=document.getElementById("bundleIdInput").value;
+  if(inputBundledId === '') {
+    error = true;
+            return demo.showNotification(
+              "top",
+              "right",
+              "error: Please add an app bundle id",
+              4
+            );
+  }
+
+
+  if(e.target.innerHTML === 'Search'){
+
+    document.getElementById('searchButton').innerHTML=` 
+          <i class="fa fa-spinner fa-spin"></i>Loading`;
+   
+  axios
+          .post("/app/searchApp", { bundleId: inputBundledId})
+          .then((res) => {
+            
+            if (res.data.success) {
+                 
+
+
+
+
+              document.getElementById('appDataDiv').innerHTML=`<img class="" src="${res.data.result.icon}" alt=""  id="myImageID" height="40px" width="40px" >
+          <h5 id="appName" class="mt-3 ml-3">${res.data.result.title}</h5>
+          <h5 id="appId" hidden  class="mt-3 ml-3">${res.data.result.appId}</h5>
+          `;
+              document.getElementById('searchButton').innerHTML=`Add Searched App`
+      ;
+            } else {
+              if (res.data.hasOwnProperty("errors")) {
+                document.getElementById('appDataDiv').innerHTML='<p class="btn btn-danger">App Not found</p>';
+                document.getElementById('searchButton').innerHTML=`Search`
+                const error =
+                  res.data.message +
+                  "<br/>" +
+                  build_error_message(res.data.errors);
+                demo.showNotification("top", "right", error, 4);
+              } else {
+                demo.showNotification("top", "right", res.data.message, 4);
+              }
+            }
+          })
+          .catch((err) => console.log(err));
+
+  }
+  else if(e.target.innerHTML === 'Add Searched App'){
+    document.getElementById('searchButton').innerHTML=` 
+          <i class="fa fa-spinner fa-spin"></i>Loading`;
+    const data = {
+      name: document.getElementById("appName").innerHTML,
+      appId: document.getElementById("appId").innerHTML,
+      iconUrl: document.getElementById("myImageID").src,
+        };
+
+    axios
+          .post("/app/add", { ...data })
+          .then((res) => {
+            $('#myModal').modal('hide');
+            document.getElementById('searchButton').innerHTML=`Search`
+            if (res.data.success) {
+              demo.showNotification("top", "right", res.data.message, 2);
+              setTimeout(
+                () => (window.location.href = "/"),
+                1500
+              );
+            } else {
+              if (res.data.hasOwnProperty("errors")) {
+                const error =
+                  res.data.message +
+                  "<br/>" +
+                  build_error_message(res.data.errors);
+                demo.showNotification("top", "right", error, 4);
+              } else {
+                demo.showNotification("top", "right", res.data.message, 4);
+              }
+            }
+          })
+          .catch((err) => console.log(err));
+
+  }
+
+
+
+
+  e.preventDefault();
+
+});
+
+document.getElementById("bundleIdInput").addEventListener("keyup", function(e) {
+ 
+  document.getElementById('appDataDiv').innerHTML=``;
+  document.getElementById('searchButton').innerHTML=`Search`
+  e.preventDefault();
+
+});
+
+
+
+function fetchReviews()
+{
+  auth_loader.style.display = "block";
+
+  axios
+          .get("/app/fetchReviews",)
+          .then((res) => {
+        
+            if (res.data.success) {
+              auth_loader.style.display = "none";
+
+              demo.showNotification("top", "right", res.data.message, 2);
+              setTimeout(
+                () => (window.location.reload()),
+                1500
+              );
+            } else {
+              auth_loader.style.display = "none";
+
+              if (res.data.hasOwnProperty("errors")) {
+                const error =
+                  res.data.message +
+                  "<br/>" +
+                  build_error_message(res.data.errors);
+                demo.showNotification("top", "right", error, 4);
+              } else {
+                demo.showNotification("top", "right", res.data.message, 4);
+              }
+            }
+          })
+          .catch((err) => console.log(err));
+}
+
+</script>

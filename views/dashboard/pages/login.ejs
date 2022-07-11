@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Replier | Login</title>
+    <style>
+      body {
+        background-image: linear-gradient(to right, #1f77d0 0%, #533ce1 100%);
+      }
+      .card {
+        background-image: linear-gradient(to bottom, #1f77d0 0%, #533ce1 100%);
+        max-width: 500px;
+        height: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        transition-duration: 0.5s;
+        border-radius: 10px;
+      }
+      .card:hover {
+        box-shadow: 2px 2px 40px #ffb429;
+        /* width: 520px;
+        height: 420px; */
+      }
+
+      .input-1 {
+        background: #1f77d0;
+        margin-top: 150px;
+        margin-left: 10%;
+        margin-right: 10%;
+        height: 30px;
+        width: 80%;
+        border: solid white 2px;
+        border-radius: 10px;
+        transition-duration: 0.5s;
+      }
+      .input-1:hover {
+        border-color: rgb(0, 0, 0);
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+      }
+      .input-2 {
+        background: #ffb429;
+        margin-top: 20px;
+        margin-left: 10%;
+        margin-right: 10%;
+        height: 30px;
+        width: 80%;
+        border: solid white 2px;
+        border-radius: 10px;
+        transition-duration: 0.5s;
+      }
+      .input-2:hover {
+        border-color: rgb(0, 0, 0);
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+      }
+      .login {
+        color: rgb(37, 37, 37);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        align-self: center;
+        margin-left: 200px;
+        position: absolute;
+        transition-duration: 0.5s;
+      }
+      .login:hover {
+        color: rgb(37, 37, 37);
+        font-size: 20px;
+      }
+      .btn {
+        margin-left: 160px;
+        margin-top: 40px;
+        width: 150px;
+        height: 35px;
+        background-color: #1f77d0;
+        border-radius: 10px;
+        border-style: none;
+        transition-duration: 0.5s;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #0e6dcc;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/auth_loader'); %>
+    <div class="card">
+      <div class="login">
+        <h1>LOGIN</h1>
+      </div>
+      <input id="email" type="email" class="input-1" placeholder="Username" />
+      <input
+        id="password"
+        type="password"
+        class="input-2"
+        placeholder="Password"
+      /><br />
+      <button onclick="login()" id="submit" type="submit" class="btn">
+        Login
+      </button>
+    </div>
+    <%- include('../partials/core_scripts')%>
+    <script src="/assets/js/login.js"></script>
+  </body>
+</html>
